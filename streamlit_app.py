@@ -9,11 +9,11 @@ import joblib
 import pickle
 
 import numpy as np
-from functions import *
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 import streamlit as st
-
+from nltk.corpus import stopwords
+import re
+from nltk.tokenize import word_tokenize
 #load pipeline tfidf vectorizer + logistic regression model
 
 model = joblib.load('lr.joblib')
@@ -23,6 +23,35 @@ vectorizer = joblib.load('vectorizer.joblib')
 open_file = open("top_50_tags.pkl", "rb")
 top_50_tags = np.array(pickle.load(open_file))
 open_file.close()
+
+def text_prepare(text):
+    """
+        text: a string
+        
+        return: modified initial string
+    """
+    STOPWORDS = set(stopwords.words('english'))
+    # find all the urls
+    pattern_url = re.compile(r'http.+?(?="|<)')
+    #text = # lowercase text
+    text =text.lower()
+    # replace url by space in text
+    text = re.sub(pattern_url, ' ', text)
+    # lemmatize text
+    #token_word = nlp(text)
+    # delete stopwords from text
+    token_word=word_tokenize(text)
+    filtered_sentence = [w for w in token_word if not w in STOPWORDS] # filtered_sentence contain all words that are not in stopwords dictionary
+    lenght_of_string=len(filtered_sentence)
+    text_new=""
+    for w in filtered_sentence:
+        if w!=filtered_sentence[lenght_of_string-1]:
+             text_new=text_new+w+" " # when w is not the last word separate by whitespace
+        else:
+            text_new=text_new+w
+            
+    text = text_new
+    return text, filtered_sentence
 
 def preprocessor(text):
     text_1, filtered_sentence = text_prepare(text)
