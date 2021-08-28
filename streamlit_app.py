@@ -14,6 +14,7 @@ import streamlit as st
 import nltk
 from nltk.corpus import stopwords
 nltk.download('stopwords')
+nltk.download('punkt')
 import re
 from nltk.tokenize import word_tokenize
 #load pipeline tfidf vectorizer + logistic regression model
