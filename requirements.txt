@@ -1,8 +1,6 @@
-import joblib
-import pickle
-
-import numpy as np
-from functions import *
-from sklearn.feature_extraction.text import TfidfVectorizer
-
-import streamlit as st
+joblib==0.17.0
+pickle==4.0
+nltk==3.5
+numpy==1.21.2
+streamlit==0.86.0
+re==2.2.1
