@@ -11,7 +11,9 @@ import pickle
 import numpy as np
 
 import streamlit as st
+import nltk
 from nltk.corpus import stopwords
+nltk.download('stopwords')
 import re
 from nltk.tokenize import word_tokenize
 #load pipeline tfidf vectorizer + logistic regression model
